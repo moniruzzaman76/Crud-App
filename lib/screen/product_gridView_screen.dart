@@ -61,8 +61,6 @@ class _ProductGridViewScreenState extends State<ProductGridViewScreen> {
     );
   }
 
-
-
   GotoUpdate(context,productItem){
     Navigator.push(context,
         MaterialPageRoute(builder: (builder)=> ProductUpdateScreen(productItem)
@@ -70,14 +68,12 @@ class _ProductGridViewScreenState extends State<ProductGridViewScreen> {
     );
   }
 
-
-
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('List Product'),),
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text(' Product List'),),
       body: Stack(
         children: [
           ScreenBackground(context),
@@ -90,29 +86,40 @@ class _ProductGridViewScreenState extends State<ProductGridViewScreen> {
                       gridDelegate: ProductGridViewStyle(),
                       itemCount: ProductList.length,
                       itemBuilder: (context,index){
+                        var productlist = List.from(ProductList.reversed);
                         return Card(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              Expanded(child: Image.network(ProductList[index]['Img'],fit: BoxFit.fill)),
+                              Expanded(child: Image.network(productlist[index]['Img'].toString()
+                                  ,fit: BoxFit.fill)
+                              ),
                               Container(
                                 padding: const EdgeInsets.fromLTRB(5,5,5,8),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(ProductList[index]['ProductName']),
+                                    Text(productlist[index]['ProductName'].toString()),
                                     const SizedBox(height: 7),
-                                    Text("Price: "+ProductList[index]['UnitPrice']+" BDT"),
+                                    Text("Price: "+productlist[index]['UnitPrice'].toString()+" BDT"),
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
                                         OutlinedButton(onPressed: (){
-                                          GotoUpdate(context,ProductList[index]);
-                                        }, child: const Icon(CupertinoIcons.ellipsis_vertical_circle,size: 18,color: colorGreen,)),
+                                          GotoUpdate(context,productlist[index]);
+                                        }, child: const Icon(
+                                          CupertinoIcons.ellipsis_vertical_circle,
+                                          size: 18,
+                                          color: colorGreen,
+                                        )),
                                         const SizedBox(width: 4),
                                         OutlinedButton(onPressed: (){
-                                          DeleteItem(ProductList[index]['_id']);
-                                        }, child: const Icon(CupertinoIcons.delete,size: 18,color: colorRed,))
+                                          DeleteItem(productlist[index]['_id'].toString());
+                                        }, child: const Icon(
+                                          CupertinoIcons.delete,
+                                          size: 18,
+                                          color: colorRed,
+                                        ))
                                       ],
                                     )
                                   ],
